@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 
 const sheetSchema = new mongoose.Schema ({
-  discordId: {type: String, required: true},
+  playerId: {type: String, required: true},
+  groupId: {type: String, required: true},
   names: {
     character: {type: String, required: true},
     player: {type: String, required: true}

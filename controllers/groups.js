@@ -32,6 +32,34 @@ router.delete('/:dungeonMaster', (req, res) => {
 })
 
 // UPDATE
+router.put('/:dungeonMaster', (req, res) => {
+  console.log(req.body);
+  Group.findOne({
+    dungeonMaster: req.params.dungeonMaster
+  }, (error, foundGroup) => {
+    if (error) {
+      console.error(error);
+    } else {
+      if (foundGroup) {
+        Group.findByIdAndUpdate(foundGroup._id, {
+          description: req.body.description
+        }, (error, updatedGroup) => {
+          if (error) {
+            console.error(error);
+          } else {
+            res.send({
+              reply: 'description successfully updated!'
+            })
+          }
+        })
+      } else {
+        res.send({
+          error: 'It doesn\'t look like you have a group. Maybe try making one?'
+        })
+      }
+    }
+  })
+})
 
 // CREATE
 
@@ -63,5 +91,40 @@ router.post('/', (req, res) => {
 });
 
 // SHOW
+router.get('/pc/:pc', (req, res) => {
+  Group.findOne({
+    playerCharacters: {
+      "$in": [req.params.pc]
+    }
+  }, (error, foundGroup) => {
+    if (error) {
+      console.error(error);
+    } else {
+      if (foundGroup) {
+        res.send(foundGroup)
+      } else {
+        res.send({
+          error: 'It doesn\'t look like you\'re a part of a group! You must join one to use this command.'
+        })
+      }
+    }
+  })
+})
+
+router.get('/dm/:dm', (req, res) => {
+  Group.findOne({dungeonMaster: req.params.dm}, (error, foundGroup) => {
+    if (error) {
+      console.error(error);
+    } else {
+      if (foundGroup) {
+        res.send(foundGroup);
+      } else {
+        res.send({
+          error: 'It doesn\'t look like you own any groups! Try making one!'
+        })
+      }
+    }
+  })
+})
 
 module.exports = router;
