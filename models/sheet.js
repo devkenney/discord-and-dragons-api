@@ -120,7 +120,8 @@ const sheetSchema = new mongoose.Schema ({
     },
     initiative: {type: String},
     speed: {type: Number}
-  }
+  },
+  features: [{type: String}]
 });
 
 const Sheet = mongoose.model('Sheet', sheetSchema);

@@ -32,7 +32,9 @@ router.delete('/:dungeonMaster', (req, res) => {
 })
 
 // UPDATE
-router.put('/:dungeonMaster', (req, res) => {
+
+// =====DESCRIPTION=====
+router.put('/description/:dungeonMaster', (req, res) => {
   console.log(req.body);
   Group.findOne({
     dungeonMaster: req.params.dungeonMaster
@@ -54,11 +56,46 @@ router.put('/:dungeonMaster', (req, res) => {
         })
       } else {
         res.send({
-          error: 'It doesn\'t look like you have a group. Maybe try making one?'
+          error: 'It doesn\'t look like you own a group. Maybe try making one?'
         })
       }
     }
   })
+})
+
+// =====PLAYERS=====
+
+router.put('/players/:dungeonMaster', (req, res) => {
+  if (req.body.playerId) {
+    Group.findOne({
+      dungeonMaster: req.params.dungeonMaster
+    }, (error, foundGroup) => {
+      if (foundGroup) {
+        Group.findByIdAndUpdate(foundGroup._id, {
+          '$push': {
+            playerCharacters: {
+              id: req.body.playerId,
+              sheetId: ''
+            }
+          }
+        }, (error, updatedGroup) => {
+          if (error) {
+            console.error(error);
+          } else {
+            res.send('Player successfully added!')
+          }
+        })
+      } else {
+        res.send('It doesn\'t look like you own a group...You should totally make one!')
+      }
+    })
+  }
+})
+
+// =====SHEETS=====
+
+router.put('/sheets/:dungeonMaster', (req, res) => {
+
 })
 
 // CREATE
@@ -93,8 +130,8 @@ router.post('/', (req, res) => {
 // SHOW
 router.get('/pc/:pc', (req, res) => {
   Group.findOne({
-    playerCharacters: {
-      "$in": [req.params.pc]
+    'playerCharacters.id': {
+      '$in': [req.params.pc]
     }
   }, (error, foundGroup) => {
     if (error) {
@@ -112,7 +149,9 @@ router.get('/pc/:pc', (req, res) => {
 })
 
 router.get('/dm/:dm', (req, res) => {
-  Group.findOne({dungeonMaster: req.params.dm}, (error, foundGroup) => {
+  Group.findOne({
+    dungeonMaster: req.params.dm
+  }, (error, foundGroup) => {
     if (error) {
       console.error(error);
     } else {
