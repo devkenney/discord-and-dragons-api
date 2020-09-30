@@ -1,58 +1,64 @@
 const mongoose = require('mongoose')
 
 const sheetSchema = new mongoose.Schema ({
-  playerId: {type: String, required: true},
-  groupId: {type: String, required: true},
+  playerId: {type: String},
+  groupId: {type: String},
   names: {
-    character: {type: String, required: true},
-    player: {type: String, required: true}
+    character: {type: String},
+    player: {type: String}
   },
   characterInfo: {
     descriptors: {
-      description: {type: String, required: true},
-      sex: {type: String, required: true},
+      description: {type: String},
+      sex: {type: String},
       age: {type: Number},
       height: {type: String},
       weight: {type: Number},
       hair: {type: String},
       skin: {type: String}
     },
-    alignment: {type: String, required: true},
-    background: {type: String, required: true},
-    race: {type: String, required: true},
-    class: {type: String, required: true},
-    level: {type: Number, required: true},
+    alignment: {type: String},
+    background: {type: String},
+    race: {type: String},
+    class: {type: String},
+    level: {type: Number},
     experience: {type: Number}
   },
   stats: {
     strength: {
-      score: {type: Number, required: true},
-      modifier: {type: Number, required: true}
+      name: 'strength',
+      score: {type: Number},
+      modifier: {type: Number}
     },
     dexterity: {
-      score: {type: Number, required: true},
-      modifier: {type: Number, required: true}
+      name: 'dexterity',
+      score: {type: Number},
+      modifier: {type: Number}
     },
     constitution: {
-      score: {type: Number, required: true},
-      modifier: {type: Number, required: true}
+      name: 'constitution',
+      score: {type: Number},
+      modifier: {type: Number}
     },
     intelligence: {
-      score: {type: Number, required: true},
-      modifier: {type: Number, required: true}
+      name: 'intelligence',
+      score: {type: Number},
+      modifier: {type: Number}
     },
     wisdom: {
-      score: {type: Number, required: true},
-      modifier: {type: Number, required: true}
+      name: 'wisdom',
+      score: {type: Number},
+      modifier: {type: Number}
     },
     charisma: {
-      score: {type: Number, required: true},
-      modifier: {type: Number, required: true}
+      name: 'charisma',
+      score: {type: Number},
+      modifier: {type: Number}
     }
   },
   proficiencies: {
-    otherProficiencies: [{type: String, required: true}],
-    skillProficiencies: [{type: String, required: true}]
+    otherProficiencies: [{type: String}],
+    skillProficiencies: [{type: String}]
   },
   combat: {
     attacks: [{type: String}],
@@ -114,10 +120,11 @@ const sheetSchema = new mongoose.Schema ({
       }
     },
     hitPoints: {
-      totalHitPoints: {type: Number, required: true},
+      totalHitPoints: {type: Number},
       tempHitPoints: {type: Number},
       hitDice: {type: String},
     },
+    savingThrows: [{type: String}],
     initiative: {type: String},
     speed: {type: Number}
   },
