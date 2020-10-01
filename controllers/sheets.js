@@ -16,22 +16,55 @@ const Group = require('../models/group');
 // find the group that the player is in
 router.post('/', (req, res) => {
   Group.findOne({
-    'playerCharacters.id': {
-      '$in': [req.body.pc]
+    'playerCharacters.playerId': {
+      '$in': [req.body.playerId]
     }
   }, (error, foundGroup) => {
+    console.log(foundGroup)
     if (error) {
       console.error(error);
     } else {
       for (let pc of foundGroup.playerCharacters) {
-        if (pc.id === req.params.pc && pc.sheetId != '') {
+        console.log(pc);
+        console.log(req.body.playerId);
+        if (pc.playerId === req.body.playerId && pc.sheetId != '') {
           res.send({
             error: 'You already have a character sheet associated with your account!'
           })
-        } else {
+        } else if (pc.playerId === req.body.playerId) {
+          console.log('creating sheet...')
           Sheet.create({
-            playerId: req.body.pc,
+            playerId: req.body.playerId,
             groupId: foundGroup._id
+          }, (error, newSheet) => {
+            if (error) {
+              console.error(error);
+            }
+            console.log(newSheet);
+            let pcIndex = ''
+            for (let indexOfPc in foundGroup.playerCharacters) {
+              console.log(indexOfPc)
+              console.log(req.body.playerId);
+              console.log(foundGroup.playerCharacters[indexOfPc].playerId);
+              if (foundGroup.playerCharacters[indexOfPc].playerId === req.body.playerId) {
+                pcIndex = indexOfPc;
+              }
+            }
+            Group.findOneAndUpdate({"_id": foundGroup._id, "playerCharacters.playerId": newSheet.playerId}, {
+              "$set": {
+                "playerCharacters.$.sheetId": newSheet._id
+              }
+            }, (error) => {
+              if (error) {
+                console.error(error)
+              } else {
+                console.log('test');
+              }
+            })
+          });
+          
+          res.send({
+            reply: 'Sheet created successfully!'
           })
         }
       }
@@ -44,3 +77,5 @@ router.post('/', (req, res) => {
 // update the group with the sheet id
 
 // SHOW
+
+module.exports = router;

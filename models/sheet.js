@@ -10,7 +10,7 @@ const sheetSchema = new mongoose.Schema ({
   characterInfo: {
     descriptors: {
       description: {type: String},
-      sex: {type: String},
+      gender: {type: String},
       age: {type: Number},
       height: {type: String},
       weight: {type: Number},
@@ -20,38 +20,38 @@ const sheetSchema = new mongoose.Schema ({
     alignment: {type: String},
     background: {type: String},
     race: {type: String},
-    class: {type: String},
+    charClass: {type: String},
     level: {type: Number},
     experience: {type: Number}
   },
   stats: {
     strength: {
-      name: 'strength',
+      name: {type: String, default: 'strength'},
       score: {type: Number},
       modifier: {type: Number}
     },
     dexterity: {
-      name: 'dexterity',
+      name: {type: String, default: 'dexterity'},
       score: {type: Number},
       modifier: {type: Number}
     },
     constitution: {
-      name: 'constitution',
+      name: {type: String, default: 'constitution'},
       score: {type: Number},
       modifier: {type: Number}
     },
     intelligence: {
-      name: 'intelligence',
+      name: {type: String, default: 'intelligence'},
       score: {type: Number},
       modifier: {type: Number}
     },
     wisdom: {
-      name: 'wisdom',
+      name: {type: String, default: 'wisdom'},
       score: {type: Number},
       modifier: {type: Number}
     },
     charisma: {
-      name: 'charisma',
+      name: {type: String, default: 'charisma'},
       score: {type: Number},
       modifier: {type: Number}
     }

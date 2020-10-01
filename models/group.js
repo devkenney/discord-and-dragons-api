@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const groupSchema = new mongoose.Schema ({
   playerCharacters: [{
-    id: {type: String},
+    playerId: {type: String},
     sheetId: {type: String}
   }],
   dungeonMaster: {type: String, required: true},

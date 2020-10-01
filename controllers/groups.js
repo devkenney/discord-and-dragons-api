@@ -74,7 +74,7 @@ router.put('/players/:dungeonMaster', (req, res) => {
         Group.findByIdAndUpdate(foundGroup._id, {
           '$push': {
             playerCharacters: {
-              id: req.body.playerId,
+              playerId: req.body.playerId,
               sheetId: ''
             }
           }

@@ -48,8 +48,8 @@ app.use('/groups', groupsController);
 const sheetsController = require('./controllers/sheets.js');
 app.use('/sheets', sheetsController);
 
-const usersController = require('./controllers/users.js');
-app.use('/users', usersController);
+// const usersController = require('./controllers/users.js');
+// app.use('/users', usersController);
 
 app.listen(PORT, () => {
   console.log('Listening on port ' + PORT);
