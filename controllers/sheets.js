@@ -11,6 +11,31 @@ const Group = require('../models/group');
 
 // UPDATE
 
+// =====INFO===== //
+router.put('/update/info', (req, res) => {
+  console.log(req.body);
+  Sheet.findOneAndUpdate({
+      playerId: req.body.playerId
+    }, {
+      "$set": {
+        "characterInfo": req.body.characterInfo,
+        "names": req.body.names
+      }
+    },
+    (error, oldSheet) => {
+      console.log(oldSheet);
+      if (error) {
+        console.error(error);
+      } else {
+        Sheet.findById(oldSheet._id, (error, newSheet) => {
+          console.log(newSheet);
+          res.send(newSheet);
+        });
+      }
+    }
+  )
+})
+
 // CREATE
 
 // find the group that the player is in
@@ -24,6 +49,7 @@ router.post('/', (req, res) => {
     if (error) {
       console.error(error);
     } else {
+      if (foundGroup) {
       for (let pc of foundGroup.playerCharacters) {
         console.log(pc);
         console.log(req.body.playerId);
@@ -50,7 +76,10 @@ router.post('/', (req, res) => {
                 pcIndex = indexOfPc;
               }
             }
-            Group.findOneAndUpdate({"_id": foundGroup._id, "playerCharacters.playerId": newSheet.playerId}, {
+            Group.findOneAndUpdate({
+              "_id": foundGroup._id,
+              "playerCharacters.playerId": newSheet.playerId
+            }, {
               "$set": {
                 "playerCharacters.$.sheetId": newSheet._id
               }
@@ -62,12 +91,17 @@ router.post('/', (req, res) => {
               }
             })
           });
-          
+
           res.send({
             reply: 'Sheet created successfully!'
           })
         }
       }
+    } else {
+      res.send({
+        error: 'You aren\'t in a group! You should join one!'
+      })
+    } 
     }
   })
 })
@@ -77,5 +111,22 @@ router.post('/', (req, res) => {
 // update the group with the sheet id
 
 // SHOW
+
+router.get('/show/:id', (req, res) => {
+  Sheet.findOne({
+    playerId: req.params.id
+  }, (error, foundSheet) => {
+    console.log(foundSheet);
+    if (foundSheet != undefined) {
+      // console.log(foundSheet);
+      res.send(foundSheet);
+    } else {
+      console.log('test');
+      res.send({
+        error: 'No sheet found. Try joining a group!'
+      })
+    }
+  })
+})
 
 module.exports = router;

@@ -58,7 +58,80 @@ const sheetSchema = new mongoose.Schema ({
   },
   proficiencies: {
     otherProficiencies: [{type: String}],
-    skillProficiencies: [{type: String}]
+    skillProficiencies: {
+      acrobatics: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      animalHandling: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      arcana: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      athletics: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      deception: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      history: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      insight: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      intimidation: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      investigation: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      medicine: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      nature: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      perception: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      performance: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      persuasion: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      religion: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      sleightOfHand: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      stealth: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      },
+      survival: {
+        score: {type: Number},
+        proficient: {type: Boolean}
+      }
+    }
   },
   combat: {
     attacks: [{type: String}],
